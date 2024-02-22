@@ -56,7 +56,7 @@ public class Order implements Serializable {
 	public int hashCode() {
 		return Objects.hash(date);
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
