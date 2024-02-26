@@ -1,46 +1,67 @@
 package com.ads.course.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
 @Entity
-@Table(name="tb_category")
+@Table(name = "tb_category")
 public class Category implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
+
 	String name;
+
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long id;
+	@Transient
+	private Set<Product> producties = new HashSet<>();
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Category() {
-		
+	
+	
+	public Set<Product> getProducties() {
+		return producties;
 	}
+
+	public Category() {
+
+	}
+
 	public Category(Long id, String name) {
-		
+
 		this.name = name;
 		this.id = id;
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -52,5 +73,5 @@ public class Category implements Serializable {
 		Category other = (Category) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }
