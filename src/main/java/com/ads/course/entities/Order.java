@@ -2,10 +2,11 @@ package com.ads.course.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.ads.course.entities.enums.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,43 +22,49 @@ import jakarta.persistence.Table;
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Instant date;
+
 	private Integer orderStatus;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
 
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
+
 	public Order() {
 
 	}
-	
+
 	public Order(Long id, Instant date, User client, OrderStatus orderStatus) {
 
 		this.id = id;
 		this.date = date;
 		this.client = client;
 		setOrderStatus(orderStatus);
+
 	}
-	
+
 	public OrderStatus getOrderStatus() {
 		return OrderStatus.valueOf(orderStatus);
 	}
 
 	public void setOrderStatus(OrderStatus orderStatus) {
-		this.orderStatus = orderStatus.GetCode();
+		if (orderStatus != null) {
+			this.orderStatus = orderStatus.GetCode();
+		}
 	}
-
+ 
 	@Override
 	public int hashCode() {
 		return Objects.hash(date);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -91,6 +99,10 @@ public class Order implements Serializable {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+
+	public Set<OrderItem> getItems() {
+		return items;
 	}
 
 	@Override
