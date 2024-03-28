@@ -62,7 +62,7 @@ public class Order implements Serializable {
  
 	@Override
 	public int hashCode() {
-		return Objects.hash(date);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class Order implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Order other = (Order) obj;
-		return Objects.equals(date, other.date);
+		return Objects.equals(id, other.id);
 	}
 
 	public Long getId() {
