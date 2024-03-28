@@ -17,7 +17,7 @@ public class OrderItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
-	
+
 	private OrderItemPK id = new OrderItemPK();
 
 	private Integer quantity;
@@ -40,6 +40,7 @@ public class OrderItem implements Serializable {
 		return id.getOrder();
 	}
 
+	
 	public Product getProduct() {
 		return id.getProduct();
 	}
